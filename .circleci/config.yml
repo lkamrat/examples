@@ -13,6 +13,7 @@ jobs:
     machine: true
     steps:
       - checkout
+      - setup_remote_docker
       - run:
           name: docker-image
           command: |
@@ -22,3 +23,28 @@ jobs:
             docker login $DOCKER_REGISTRY -u $DOCKER_REGISTRY_USER -p $DOCKER_REGISTRY_PASSWORD
             docker tag $IMAGE:$TAG $DOCKER_REGISTRY/$IMAGE:$TAG
             docker push $DOCKER_REGISTRY/$IMAGE:$TAG
+
+
+  # push-to-docker-hub:
+  #     docker:
+  #       - image: docker:latest
+  #     steps:
+  #       - checkout
+  #       - setup_remote_docker
+  #       - run:
+  #           name: Install dependencies
+  #           command: |
+  #             apk add --update --no-cache curl jq python py-pip
+  #       - run:
+  #           name: Build Docker Image
+  #           command: |
+  #             docker build -t api .
+  #             docker tag api <yourRepo>/<imageName>:latest
+  #             docker tag api <yourRepo>/<imageName>:$CIRCLE_SHA1
+  #             docker login -u $DOCKER_USER -p $DOCKER_PASS
+  #             docker push <yourRepo>/<imageName>:latest
+  #             docker push <yourRepo>/<imageName>:$CIRCLE_SHA1
+  #       - persist_to_workspace:
+  #           root: ./
+  #           paths:
+  #             - k8s-*.yml            
