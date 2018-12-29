@@ -10,7 +10,9 @@ jobs:
           command: dotnet build docker/github-circleci-kubernetes/HelloWorld.sln
      
   docker-image:
-    machine: true
+#    machine: true
+    docker:
+        - image: docker:latest
     steps:
       - checkout
       - setup_remote_docker
