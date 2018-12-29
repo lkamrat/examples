@@ -3,17 +3,17 @@ jobs:
   build:
     docker:
       - image: microsoft/dotnet:2.2-sdk
+    machine: true
     steps:
       - checkout
       - run:
           name: build
           command: dotnet build docker/github-circleci-kubernetes/HelloWorld.sln
-      - setup_remote_docker
       - run:
           name: docker-image
           command: |
-            # TAG=latest
-            # IMAGE=application_name
+            TAG=latest
+            IMAGE=application_name
             docker build -t $IMAGE:$TAG .
             docker login $DOCKER_REGISTRY -u $DOCKER_REGISTRY_USER -p $DOCKER_REGISTRY_PASSWORD
             docker tag $IMAGE:$TAG $DOCKER_REGISTRY/$IMAGE:$TAG
