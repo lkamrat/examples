@@ -9,10 +9,10 @@ COPY ["docker/github-circleci-kubernetes/HelloWorld/HelloWorld.csproj", "docker/
 RUN dotnet restore "docker/github-circleci-kubernetes/HelloWorld/HelloWorld.csproj"
 COPY . .
 WORKDIR "/src/HelloWorld"
-RUN dotnet build "HelloWorld.csproj" -c Release -o /app
+RUN dotnet build "docker/github-circleci-kubernetes/HelloWorld/HelloWorld.csproj" -c Release -o /app
 
 FROM build AS publish
-RUN dotnet publish "HelloWorld.csproj" -c Release -o /app
+RUN dotnet publish "docker/github-circleci-kubernetes/HelloWorld/HelloWorld.csproj" -c Release -o /app
 
 FROM base AS final
 WORKDIR /app
