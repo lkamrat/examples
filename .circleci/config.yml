@@ -24,7 +24,7 @@ jobs:
       - run:
           name: start docker deamon
           command: |
-            service docker start 
+            systemctl docker start 
       - checkout        
       - run:
           name: docker-image
