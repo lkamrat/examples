@@ -22,6 +22,11 @@ jobs:
           name: Print Runtime Info
           command: |
             docker --version
+      - checkout      
+      - run:
+          name: start docker deamon
+          command: |
+            sudo systemctl start docker
       - checkout        
       - run:
           name: docker-image
