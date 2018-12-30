@@ -5,7 +5,7 @@ EXPOSE 44312
 
 FROM microsoft/dotnet:2.1-sdk AS build
 WORKDIR /src
-COPY ["HelloWorld/HelloWorld.csproj", "HelloWorld/"]
+COPY ["docker/github-circleci-kubernetes/HelloWorld/HelloWorld.csproj", "docker/github-circleci-kubernetes/HelloWorld/"]
 RUN dotnet restore "HelloWorld/HelloWorld.csproj"
 COPY . .
 WORKDIR "/src/HelloWorld"
