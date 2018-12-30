@@ -9,7 +9,6 @@ jobs:
           name: build
           command: dotnet build docker/github-circleci-kubernetes/HelloWorld.sln
       - checkout
-      - setup_remote_docker
       - run:
           name: docker-image
           command: |
