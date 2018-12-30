@@ -8,24 +8,24 @@ jobs:
       - run:
           name: build
           command: dotnet build docker/github-circleci-kubernetes/HelloWorld.sln
+      # - checkout
+      # - run:
+      #     name: Install Docker client
+      #     command: |
+      #       set -x
+      #       VER="17.05.0-ce"
+      #       curl -L -o /tmp/docker-$VER.tgz https://get.docker.com/builds/Linux/x86_64/docker-$VER.tgz
+      #       tar -xz -C /tmp -f /tmp/docker-$VER.tgz
+      #       mv /tmp/docker/* /usr/bin
+      # - run:
+      #     name: Print Runtime Info
+      #     command: |
+      #       docker --version
+      # - checkout  
+  docker-image:
+    machine: true
+    steps:
       - checkout
-      - run:
-          name: Install Docker client
-          command: |
-            set -x
-            VER="17.05.0-ce"
-            curl -L -o /tmp/docker-$VER.tgz https://get.docker.com/builds/Linux/x86_64/docker-$VER.tgz
-            tar -xz -C /tmp -f /tmp/docker-$VER.tgz
-            mv /tmp/docker/* /usr/bin
-      - run:
-          name: Print Runtime Info
-          command: |
-            docker --version
-      - run:
-          name: start docker deamon
-          command: |
-            service docker start 
-      - checkout        
       - run:
           name: docker-image
           command: |
@@ -34,23 +34,8 @@ jobs:
             docker build -t $IMAGE:$TAG .
             docker login $DOCKER_REGISTRY -u $DOCKER_REGISTRY_USER -p $DOCKER_REGISTRY_PASSWORD
             docker tag $IMAGE:$TAG $DOCKER_REGISTRY/$IMAGE:$TAG
-            docker push $DOCKER_REGISTRY/$IMAGE:$TAG
      
 
-  # docker-image:
-  #   machine: true
-  #   steps:
-  #     - checkout
-  #     - setup_remote_docker
-  #     - run:
-  #         name: docker-image
-  #         command: |
-  #           TAG=latest
-  #           IMAGE=application_name
-  #           docker build -t $IMAGE:$TAG .
-  #           docker login $DOCKER_REGISTRY -u $DOCKER_REGISTRY_USER -p $DOCKER_REGISTRY_PASSWORD
-  #           docker tag $IMAGE:$TAG $DOCKER_REGISTRY/$IMAGE:$TAG
-  #           docker push $DOCKER_REGISTRY/$IMAGE:$TAG
 
   # push-to-docker-hub:
   #     docker:
